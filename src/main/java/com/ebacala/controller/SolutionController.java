@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/v1")
 public class SolutionController {
     @Autowired
     private SolutionRepository solutionRepository;
