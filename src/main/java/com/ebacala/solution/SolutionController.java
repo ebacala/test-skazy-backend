@@ -3,16 +3,16 @@ package com.ebacala.solution;
 import com.ebacala.responsehelper.JsonMessage;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin
@@ -43,8 +43,39 @@ public class SolutionController {
     }
 
     @GetMapping("/solutions")
-    public ResponseEntity<List<Solution>> getAllSolutions() {
-        return ResponseEntity.ok(solutionService.getAllSolutions());
+    public ResponseEntity<List<Solution>> getAllSolutions(
+            @RequestParam(required = false) Integer a,
+            @RequestParam(required = false) Integer b,
+            @RequestParam(required = false) Integer c,
+            @RequestParam(required = false) Integer d,
+            @RequestParam(required = false) Integer e,
+            @RequestParam(required = false) Integer f,
+            @RequestParam(required = false) Integer g,
+            @RequestParam(required = false) Integer h,
+            @RequestParam(required = false) Integer i,
+            @RequestParam(required = false) Boolean isValid) {
+
+        // Check if any parameter is provided
+        if (Stream.of(a, b, c, d, e, f, g, h, i, isValid).allMatch(Objects::isNull)) {
+            return ResponseEntity.ok(solutionService.getAllSolutions());
+        }
+
+        Solution filteredSolution = new Solution();
+        if (a != null) filteredSolution.setA(a);
+        if (b != null) filteredSolution.setB(b);
+        if (c != null) filteredSolution.setC(c);
+        if (d != null) filteredSolution.setD(d);
+        if (e != null) filteredSolution.setE(e);
+        if (f != null) filteredSolution.setF(f);
+        if (g != null) filteredSolution.setG(g);
+        if (h != null) filteredSolution.setH(h);
+        if (i != null) filteredSolution.setI(i);
+        if (isValid != null) filteredSolution.setIsValid(isValid);
+        
+        // Use ExampleMatcher to create a flexible filter
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
+
+        return ResponseEntity.ok(solutionService.getFilteredSolutions(Example.of(filteredSolution, matcher)));
     }
 
     @GetMapping("/solution/{id}")

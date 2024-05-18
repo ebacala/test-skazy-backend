@@ -3,7 +3,7 @@ package com.ebacala.solution;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import org.aspectj.apache.bcel.classfile.Unknown;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,52 +17,61 @@ public class Solution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "a", nullable = false)
+    @Column(name = "a")
+    @NotNull(message = "a must be a number between 1 and 9")
     @Min(value = 1, message = "a must be a number between 1 and 9")
     @Max(value = 9, message = "a must be a number between 1 and 9")
-    private int a;
+    private Integer a;
 
-    @Column(name = "b", nullable = false)
+    @Column(name = "b")
+    @NotNull(message = "b must be a number between 1 and 9")
     @Min(value = 1, message = "b must be a number between 1 and 9")
     @Max(value = 9, message = "b must be a number between 1 and 9")
-    private int b;
+    private Integer b;
 
-    @Column(name = "c", nullable = false)
+    @Column(name = "c")
+    @NotNull(message = "c must be a number between 1 and 9")
     @Min(value = 1, message = "c must be a number between 1 and 9")
     @Max(value = 9, message = "c must be a number between 1 and 9")
-    private int c;
+    private Integer c;
 
-    @Column(name = "d", nullable = false)
+    @Column(name = "d")
+    @NotNull(message = "d must be a number between 1 and 9")
     @Min(value = 1, message = "d must be a number between 1 and 9")
     @Max(value = 9, message = "d must be a number between 1 and 9")
-    private int d;
+    private Integer d;
 
-    @Column(name = "e", nullable = false)
+    @Column(name = "e")
+    @NotNull(message = "e must be a number between 1 and 9")
     @Min(value = 1, message = "e must be a number between 1 and 9")
     @Max(value = 9, message = "e must be a number between 1 and 9")
-    private int e;
+    private Integer e;
 
-    @Column(name = "f", nullable = false)
+    @Column(name = "f")
+    @NotNull(message = "f must be a number between 1 and 9")
     @Min(value = 1, message = "f must be a number between 1 and 9")
     @Max(value = 9, message = "f must be a number between 1 and 9")
-    private int f;
+    private Integer f;
 
-    @Column(name = "g", nullable = false)
+    @Column(name = "g")
+    @NotNull(message = "g must be a number between 1 and 9")
     @Min(value = 1, message = "g must be a number between 1 and 9")
     @Max(value = 9, message = "g must be a number between 1 and 9")
-    private int g;
+    private Integer g;
 
-    @Column(name = "h", nullable = false)
+    @Column(name = "h")
+    @NotNull(message = "h must be a number between 1 and 9")
     @Min(value = 1, message = "h must be a number between 1 and 9")
     @Max(value = 9, message = "h must be a number between 1 and 9")
-    private int h;
+    private Integer h;
 
-    @Column(name = "i", nullable = false)
+    @Column(name = "i")
+    @NotNull(message = "i must be a number between 1 and 9")
     @Min(value = 1, message = "i must be a number between 1 and 9")
     @Max(value = 9, message = "i must be a number between 1 and 9")
-    private int i;
+    private Integer i;
 
-    @Column(name = "is_valid", nullable = false)
+    @Column(name = "is_valid")
     private Boolean isValid;
 
     @Column(name = "creation_date", nullable = false, updatable = false)

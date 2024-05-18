@@ -1,6 +1,7 @@
 package com.ebacala.solution;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,10 @@ public class SolutionService {
 
     public List<Solution> getAllSolutions() {
         return solutionRepository.findAll();
+    }
+
+    public List<Solution> getFilteredSolutions(Example<Solution> filteredSolution) {
+        return solutionRepository.findAll(filteredSolution);
     }
 
     public Optional<Solution> getSolutionById(Long id) {
