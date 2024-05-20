@@ -2,7 +2,7 @@
 CREATE SCHEMA "api";
 
 ---------- Create TABLE
-CREATE TABLE IF NOT EXISTS "api"."solutions"(
+CREATE TABLE IF NOT EXISTS "api"."answers"(
     "id" SERIAL NOT NULL,
     "a" SMALLINT NOT NULL DEFAULT 0,
     "b" SMALLINT NOT NULL DEFAULT 0,
@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS "api"."solutions"(
     "is_valid" BOOLEAN NOT NULL,
     "creation_date" TIMESTAMPTZ DEFAULT NOW(),
     "modification_date" TIMESTAMPTZ DEFAULT NOW(),
-    CONSTRAINT pk__solutions__id PRIMARY KEY (id),
-    CONSTRAINT unique__solutions__solution UNIQUE (a, b, c, d, e, f, g, h, i)
+    CONSTRAINT pk__answers__id PRIMARY KEY (id),
+    CONSTRAINT unique__answsers__answer UNIQUE (a, b, c, d, e, f, g, h, i)
 );

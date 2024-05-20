@@ -1,4 +1,4 @@
-package com.ebacala.solution;
+package com.ebacala.answer;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -10,8 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.util.*;
 
 @Entity
-@Table(schema = "api", name = "solutions")
-public class Solution {
+@Table(schema = "api", name = "answers")
+public class Answer {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,10 +82,10 @@ public class Solution {
     @UpdateTimestamp
     private Date modificationDate;
 
-    public Solution() {
+    public Answer() {
     }
 
-    public Solution(List<Integer> unknownList) {
+    public Answer(List<Integer> unknownList) {
         this.setA(unknownList.get(0));
         this.setB(unknownList.get(1));
         this.setC(unknownList.get(2));
@@ -221,8 +221,8 @@ public class Solution {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Solution solution = (Solution) o;
-        return a == solution.a && b == solution.b && c == solution.c && d == solution.d && e == solution.e && f == solution.f && g == solution.g && h == solution.h && i == solution.i;
+        Answer answer = (Answer) o;
+        return a == answer.a && b == answer.b && c == answer.c && d == answer.d && e == answer.e && f == answer.f && g == answer.g && h == answer.h && i == answer.i;
     }
 
     @Override
@@ -232,7 +232,7 @@ public class Solution {
 
     @Override
     public String toString() {
-        return "Solution{" +
+        return "Answer{" +
                 "a=" + a +
                 ", b=" + b +
                 ", c=" + c +

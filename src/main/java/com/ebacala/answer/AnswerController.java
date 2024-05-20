@@ -1,4 +1,4 @@
-package com.ebacala.solution;
+package com.ebacala.answer;
 
 import com.ebacala.responsehelper.JsonMessage;
 import jakarta.validation.Valid;
@@ -17,12 +17,12 @@ import java.util.stream.Stream;
 @RestController
 @CrossOrigin
 @RequestMapping("/v1")
-public class SolutionController {
+public class AnswerController {
     @Autowired
-    private SolutionService solutionService;
+    private AnswerService answerService;
 
     @Autowired
-    private SolutionSolver solutionSolver;
+    private AnswerSolver answerSolver;
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<Map<String, List<String>>> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
@@ -31,8 +31,8 @@ public class SolutionController {
         return ResponseEntity.badRequest().body(getErrorsMap(errors));
     }
 
-    @ExceptionHandler(value = {InvalidSolutionException.class})
-    public ResponseEntity<String> handleInvalidSolution(InvalidSolutionException exception) {
+    @ExceptionHandler(value = {InvalidAnswerException.class})
+    public ResponseEntity<String> handleInvalidAnswer(InvalidAnswerException exception) {
         return ResponseEntity.badRequest().body(new JsonMessage(exception.getMessage()).getBody());
     }
 
@@ -42,8 +42,8 @@ public class SolutionController {
         return errorResponse;
     }
 
-    @GetMapping("/solutions")
-    public ResponseEntity<List<Solution>> getAllSolutions(
+    @GetMapping("/answers")
+    public ResponseEntity<List<Answer>> getAllAnswers(
             @RequestParam(required = false) Integer a,
             @RequestParam(required = false) Integer b,
             @RequestParam(required = false) Integer c,
@@ -57,68 +57,68 @@ public class SolutionController {
 
         // Check if any parameter is provided
         if (Stream.of(a, b, c, d, e, f, g, h, i, isValid).allMatch(Objects::isNull)) {
-            return ResponseEntity.ok(solutionService.getAllSolutions());
+            return ResponseEntity.ok(answerService.getAllAnswers());
         }
 
-        Solution filteredSolution = new Solution();
-        if (a != null) filteredSolution.setA(a);
-        if (b != null) filteredSolution.setB(b);
-        if (c != null) filteredSolution.setC(c);
-        if (d != null) filteredSolution.setD(d);
-        if (e != null) filteredSolution.setE(e);
-        if (f != null) filteredSolution.setF(f);
-        if (g != null) filteredSolution.setG(g);
-        if (h != null) filteredSolution.setH(h);
-        if (i != null) filteredSolution.setI(i);
-        if (isValid != null) filteredSolution.setIsValid(isValid);
+        Answer filteredAnswer = new Answer();
+        if (a != null) filteredAnswer.setA(a);
+        if (b != null) filteredAnswer.setB(b);
+        if (c != null) filteredAnswer.setC(c);
+        if (d != null) filteredAnswer.setD(d);
+        if (e != null) filteredAnswer.setE(e);
+        if (f != null) filteredAnswer.setF(f);
+        if (g != null) filteredAnswer.setG(g);
+        if (h != null) filteredAnswer.setH(h);
+        if (i != null) filteredAnswer.setI(i);
+        if (isValid != null) filteredAnswer.setIsValid(isValid);
         
         // Use ExampleMatcher to create a flexible filter
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 
-        return ResponseEntity.ok(solutionService.getFilteredSolutions(Example.of(filteredSolution, matcher)));
+        return ResponseEntity.ok(answerService.getFilteredAnswers(Example.of(filteredAnswer, matcher)));
     }
 
-    @GetMapping("/solution/{id}")
-    public ResponseEntity<Solution> getSolutionById(@PathVariable Long id) {
-        Optional<Solution> solution = solutionService.getSolutionById(id);
+    @GetMapping("/answer/{id}")
+    public ResponseEntity<Answer> getAnswerById(@PathVariable Long id) {
+        Optional<Answer> answer = answerService.getAnswerById(id);
 
-        if (solution.isEmpty()) {
+        if (answer.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(solution.get());
+        return ResponseEntity.ok(answer.get());
     }
 
     @PostMapping("/generate-all-solutions")
-    public ResponseEntity<String> generateAllSolution() {
-        long durationInSeconds = solutionService.generateAllPossibleSolutions();
+    public ResponseEntity<String> generateAllAnswers() {
+        long durationInSeconds = answerService.generateAllPossibleSolutions();
 
         JsonMessage jsonMessage = new JsonMessage("The generation of all the solutions took " + durationInSeconds + " seconds.");
 
         return ResponseEntity.ok(jsonMessage.getBody());
     }
 
-    @PostMapping("/solution")
-    public ResponseEntity<Solution> createSolution(@RequestBody @Valid Solution solution) {
-        if (!solution.containsDifferentUnknowns()) {
-            throw new InvalidSolutionException();
+    @PostMapping("/answer")
+    public ResponseEntity<Answer> createAnswer(@RequestBody @Valid Answer answer) {
+        if (!answer.containsDifferentUnknowns()) {
+            throw new InvalidAnswerException();
         }
 
-        return ResponseEntity.ok(solutionService.createSolution(solution));
+        return ResponseEntity.ok(answerService.createAnswer(answer));
     }
 
-    @PutMapping("/solution/{id}")
-    public Solution updateSolution(@PathVariable Long id, @RequestBody @Valid Solution solution) {
-        return solutionService.updateSolution(id, solution);
+    @PutMapping("/answer/{id}")
+    public Answer updateAnswer(@PathVariable Long id, @RequestBody @Valid Answer answer) {
+        return answerService.updateAnswer(id, answer);
     }
 
-    @DeleteMapping("/solution/{id}")
-    public void deleteSolution(@PathVariable Long id) {
-        solutionService.deleteSolutionById(id);
+    @DeleteMapping("/answer/{id}")
+    public void deleteAnswer(@PathVariable Long id) {
+        answerService.deleteAnswerById(id);
     }
 
-    @DeleteMapping("/solutions")
-    public void deleteAllSolutions() {
-        solutionService.deleteAllSolutions();
+    @DeleteMapping("/answers")
+    public void deleteAllAnswers() {
+        answerService.deleteAllAnswers();
     }
 }

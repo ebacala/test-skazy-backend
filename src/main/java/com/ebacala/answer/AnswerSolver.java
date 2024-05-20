@@ -1,4 +1,4 @@
-package com.ebacala.solution;
+package com.ebacala.answer;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class SolutionSolver {
+public class AnswerSolver {
     @Autowired
-    private SolutionRepository solutionRepository;
+    private AnswerRepository answerRepository;
 
     /**
      * Tell if the provided answer is a solution to the riddle's equation
@@ -22,10 +22,10 @@ public class SolutionSolver {
      * @param answer the provided answer
      * @return true if the provided answer is a solution, false otherwise
      */
-    public Boolean isAnswerValid(Solution answer) {
-        double solutionResult = (answer.getA() + ((double) (13 * answer.getB()) / answer.getC()) + answer.getD() + (12 * answer.getE()) - answer.getF() + ((double) (answer.getG() * answer.getH()) / answer.getI()));
+    public Boolean isAnswerValid(Answer answer) {
+        double result = (answer.getA() + ((double) (13 * answer.getB()) / answer.getC()) + answer.getD() + (12 * answer.getE()) - answer.getF() + ((double) (answer.getG() * answer.getH()) / answer.getI()));
 
-        return solutionResult == 87;
+        return result == 87;
     }
 
     /**
@@ -34,24 +34,24 @@ public class SolutionSolver {
      *
      * @return the list of all the solutions
      */
-    public List<Solution> generateAllPossibleSolutions() {
+    public List<Answer> generateAllPossibleSolutions() {
         List<Integer> allowedDigits = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
         PermutationIterator permutationIterator = new PermutationIterator(allowedDigits);
 
-        List<Solution> possibleSolutions = new ArrayList<>();
+        List<Answer> possibleAnswers = new ArrayList<>();
 
         while (permutationIterator.hasNext()) {
             List<Integer> permutation = permutationIterator.next();
 
-            Solution answer = new Solution(permutation);
+            Answer answer = new Answer(permutation);
 
             answer.setIsValid(isAnswerValid(answer));
 
             if (answer.getIsValid()) {
-                possibleSolutions.add(answer);
+                possibleAnswers.add(answer);
             }
         }
 
-        return possibleSolutions;
+        return possibleAnswers;
     }
 }

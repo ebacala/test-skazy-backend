@@ -1,9 +1,9 @@
-package com.ebacala.solution;
+package com.ebacala.answer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SolutionRepository extends JpaRepository<Solution, Long>, QueryByExampleExecutor<Solution> {
+public interface AnswerRepository extends JpaRepository<Answer, Long>, QueryByExampleExecutor<Answer> {
 }
