@@ -107,6 +107,15 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.createAnswer(answer));
     }
 
+    @PostMapping("/answer/is-valid")
+    public ResponseEntity<String> isAnswerValid(@RequestBody @Valid Answer answer) {
+        if (answerSolver.isAnswerValid(answer)) {
+            return ResponseEntity.ok(new JsonMessage("This anwser is valid").getBody());
+        }
+
+        return ResponseEntity.ok(new JsonMessage("This anwser is not valid").getBody());
+    }
+
     @PutMapping("/answer/{id}")
     public Answer updateAnswer(@PathVariable Long id, @RequestBody @Valid Answer answer) {
         return answerService.updateAnswer(id, answer);
