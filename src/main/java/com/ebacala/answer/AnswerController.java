@@ -71,7 +71,7 @@ public class AnswerController {
         if (h != null) filteredAnswer.setH(h);
         if (i != null) filteredAnswer.setI(i);
         if (isValid != null) filteredAnswer.setIsValid(isValid);
-        
+
         // Use ExampleMatcher to create a flexible filter
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 
@@ -122,12 +122,16 @@ public class AnswerController {
     }
 
     @DeleteMapping("/answer/{id}")
-    public void deleteAnswer(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAnswer(@PathVariable Long id) {
         answerService.deleteAnswerById(id);
+
+        return ResponseEntity.ok("{}");
     }
 
     @DeleteMapping("/answers")
-    public void deleteAllAnswers() {
+    public ResponseEntity<String> deleteAllAnswers() {
         answerService.deleteAllAnswers();
+
+        return ResponseEntity.ok("{}");
     }
 }
